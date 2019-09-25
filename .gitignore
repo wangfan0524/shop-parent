@@ -5,7 +5,6 @@
 mvnw
 mvnw.cmd
 pom.xml
-src/
 libs/
 /member/
 shop-api/shop-member-api/target/classes/META-INF/
@@ -16,3 +15,4 @@ shop-common/target/classes/META-INF/
 shop-common/target/classes/com/fan/wang/common/entity/
 shop-common/target/classes/com/fan/wang/utils/PackingSQLUtils.class
 shop-common/target/generated-sources/
+target/

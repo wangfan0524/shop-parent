@@ -155,5 +155,7 @@
 		<module>shop-member</module>
 		<module>shop-common</module>
 		<module>shop-api</module>
+		<module>shop-message</module>
+		<module>shop-web</module>
 	</modules>
 </project>
