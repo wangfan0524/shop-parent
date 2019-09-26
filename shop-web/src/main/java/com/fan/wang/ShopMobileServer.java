@@ -10,10 +10,10 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @EnableEurekaClient
 //启用feign客户端调用
 @EnableFeignClients
-public class AppMobile {
+public class ShopMobileServer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AppMobile.class, args);
+		SpringApplication.run(ShopMobileServer.class, args);
 	}
 
 }

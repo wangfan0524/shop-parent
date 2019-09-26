@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 /**
  * 用户dao
  *
@@ -33,4 +35,7 @@ public interface UserDao extends BaseDao {
      */
     @Select("SELECT id,username,password,phone,email from mb_user where id =#{id}")
     UserEntity getUserInfo(@Param("id") Long id);
+
+    @Select("SELECT id,username,password,phone,email from mb_user where username =#{userEntity.username} or phone=#{userEntity.phone}")
+    List<UserEntity> checkUserRepeat(@Param("userEntity")UserEntity userEntity);
 }

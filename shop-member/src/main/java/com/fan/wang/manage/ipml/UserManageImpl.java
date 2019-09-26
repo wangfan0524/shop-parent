@@ -13,6 +13,7 @@ import com.fan.wang.utils.token.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Map;
 
@@ -40,7 +41,10 @@ public class UserManageImpl extends BaseApiService implements UserManage {
     private BaseRedisService redisService;
 
     @Override
-    public void register(UserEntity userEntity) {
+    public Map<String,Object> register(UserEntity userEntity) {
+        if (!CollectionUtils.isEmpty(userDao.checkUserRepeat(userEntity))){
+          return setResutError("用户名重复！");
+        }
         userEntity.setCreated(DateUtils.getTimestamp());
         userEntity.setUpdated(DateUtils.getTimestamp());
         String phoneNum = userEntity.getPhone();
@@ -50,6 +54,7 @@ public class UserManageImpl extends BaseApiService implements UserManage {
         String emailMsg = getMailMessage(userEntity.getEmail(), userEntity.getUsername(), userEntity.getPhone());
         providerMsg.sendMsg(emailMsg);
         log.info("###用户：" + userEntity + "注册成功");
+        return setResutSuccess();
     }
 
     @Override

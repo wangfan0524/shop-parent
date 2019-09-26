@@ -28,8 +28,7 @@ public class UserServiceImpl extends BaseApiService implements UserService {
     @Override
     public Map<String, Object> regist(@RequestBody UserEntity userEntity) {
         try {
-            userManage.register(userEntity);
-            return setResutSuccess();
+            return userManage.register(userEntity);
         } catch (Exception e) {
             log.error("###register()失败");
             return setResutError(e.toString());

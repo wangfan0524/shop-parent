@@ -6,22 +6,20 @@ import com.fan.wang.constants.BaseApiConstants;
 import com.fan.wang.entity.UserEntity;
 import com.fan.wang.feign.UserFeign;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * @classDesc: 功能描述:()
- * @author: 蚂蚁课堂创始人-余胜军
- * @QQ: 644064779
- * @QQ粉丝群: 116295598
- * @createTime: 2017年10月26日 下午10:50:39
- * @version: v1.0
- * @copyright:每特学院(蚂蚁课堂)上海每特教育科技有限公司
+ * 封装前端调用通用方法
+ *
+ * @author fan.wang03@hand-china.com
+ * @version 1.0
+ * @date 2019/9/22 : 上午10:59
  */
-@Controller
+@Component
 public class BaseController {
     @Autowired
     private UserFeign userFeign;

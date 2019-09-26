@@ -15,6 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+/**
+ * 用户登录controller
+ *
+ * @author fan.wang03@hand-china.com
+ * @version 1.0
+ * @date 2019/9/22 : 上午10:59
+ */
 @Controller
 public class LoginConroller extends BaseController {
     private static final String LGOIN = "login";

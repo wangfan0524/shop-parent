@@ -17,7 +17,7 @@ public interface UserManage {
      *
      * @param userEntity 用户实体
      */
-    void register(UserEntity userEntity);
+    Map<String,Object> register(UserEntity userEntity);
 
     /**
      * 将用户号码作为salt对密码进行MD5加密
