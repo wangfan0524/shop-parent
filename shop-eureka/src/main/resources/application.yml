@@ -2,9 +2,14 @@ server:
   port: 8761
 eureka:
   instance:
-    hostname: localhost
+    hostname: oldwang
+    prefer-ip-address: true
+      # 自定义instance-id
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${server.port}}
+
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      #defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://47.93.242.182:8761/eureka/

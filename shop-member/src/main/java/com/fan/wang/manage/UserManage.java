@@ -43,5 +43,7 @@ public interface UserManage {
      * @return 通用返回结果(将用户信息封装在了MAP)中
      */
     Map<String, Object> getUser(String token);
+
+    Map<String, Object> userLoginOpenId(String openid);
 }
 

@@ -1,33 +1,40 @@
 server:
-  port: 8762
+  port: 8769
 eureka:
+  instance:
+    prefer-ip-address: true
+      # 自定义instance-id
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${server.port}}
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://47.93.242.182:8761/eureka/
+
 spring:
   application:
     name: member
   rabbitmq:
-    host: 192.168.136.101
+    host: 47.93.242.182
     port: 5672
     username: test
     password: 123456
     virtual-host: /
   redis:
-    # password: 123456
     port: 6379
+    # password: root
+    requirePass: root
     pool:
       max-idle: 100
       min-idle: 1
       max-active: 1000
       max-wait: -1
     database: 5
-    host: 127.0.0.1
+    host: 47.93.242.182
+
 
   #数据库连接信息
   datasource:
     name: test
-    url: jdbc:mysql://127.0.0.1:3306/test
+    url: jdbc:mysql://47.93.242.182:3308/test
     username: root
     password: root
     # 使用druid数据源

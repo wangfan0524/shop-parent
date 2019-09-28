@@ -4,6 +4,7 @@ package com.fan.wang.common.redis;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,9 @@ public class BaseRedisService {
 
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
+
+	@Autowired
+	private RedisTemplate redisTemplate;
 	/**
 	 * 
 	 * @methodDesc: 功能描述:(往redis添加信息)
@@ -31,12 +35,12 @@ public class BaseRedisService {
 			// 判断是不是string类型，是的话进行强转
 			if (value instanceof String) {
 				String setValue = (String) value;
-				stringRedisTemplate.opsForValue().set(key, setValue);
+				redisTemplate.opsForValue().set(key, setValue);
 			}
 			// 封装其他类型
 			// 设置有效期
 			if (timeOut != null)
-				stringRedisTemplate.expire(key, timeOut, TimeUnit.SECONDS);
+				redisTemplate.expire(key, timeOut, TimeUnit.SECONDS);
 
 		}
 
@@ -49,7 +53,7 @@ public class BaseRedisService {
 	 *             key
 	 */
 	public String get(String key) {
-		return stringRedisTemplate.opsForValue().get(key);
+		return (String) redisTemplate.opsForValue().get(key);
 	}
 
 	/**
@@ -59,6 +63,6 @@ public class BaseRedisService {
 	 *             key
 	 */
 	public void delete(String key) {
-		stringRedisTemplate.delete(key);
+		redisTemplate.delete(key);
 	}
 }

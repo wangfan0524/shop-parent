@@ -5,7 +5,9 @@ import com.fan.wang.entity.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -38,4 +40,10 @@ public interface UserDao extends BaseDao {
 
     @Select("SELECT id,username,password,phone,email from mb_user where username =#{userEntity.username} or phone=#{userEntity.phone}")
     List<UserEntity> checkUserRepeat(@Param("userEntity")UserEntity userEntity);
+
+    @Select("select ID,USERNAME,PASSWORD,phone,EMAIL, created,updated from mb_user  WHERE openid=#{openid}")
+    UserEntity findUserOpenId(@Param("openid") String openid);
+
+    @Update("update mb_user set openid=#{user.openid} ,updated=#{user.updated} where id=#{user.id}")
+    void updateUserOpenId(@Param("user") UserEntity user);
 }

@@ -47,4 +47,13 @@ public interface UserService {
     @PostMapping("/getuser")
     Map<String,Object> getUser(@RequestParam(value = "token",required=false) String  token);
 
+    /**
+     *
+     * 使用openid关联用户信息
+     *
+     * @param openid  用户token
+     * @return Map<String,Object> 注册结果
+     */
+    @PostMapping("/userloginopenid")
+    public Map<String, Object> userLoginOpenId(@RequestParam("openid") String openid);
 }

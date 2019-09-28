@@ -12,13 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-/**
- * 用户注册controller
- *
- * @author fan.wang03@hand-china.com
- * @version 1.0
- * @date 2019/9/22 : 上午10:59
- */
 @Controller
 public class RegistController extends BaseController {
     private static final String LOCAREGIST = "locaRegist";
@@ -26,8 +19,8 @@ public class RegistController extends BaseController {
     @Autowired
     private UserFeign userFeign;
 
-    @RequestMapping("/locaRegist")
-    public String locaRegist() {
+    @RequestMapping("/locaRegister")
+    public String locaRegist(String source, HttpServletRequest request) {
         return LOCAREGIST;
     }
 

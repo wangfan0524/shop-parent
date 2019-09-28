@@ -39,11 +39,7 @@ public class SendEmail implements ApplicationListener<UserRegisterEvent> {
         message.setFrom(emailConfig.getFrom());
         message.setTo(mail);
         message.setSubject("商城注册成功");
-        message.setText("\"<html>\" +\n" +
-                "                          \"<body>\" + 恭喜您:\"+userName+\",成为商城的新用户!谢谢您的光临! +\n" +
-                "                            \"</body>\" +\n" +
-                "                           \"</html>\"");
-
+        message.setText(userName+ "欢迎您,成为新用户!");
         log.info("###发送短信邮箱 mail:{}", mail);
         mailSender.send(message);
     }

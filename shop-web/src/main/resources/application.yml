@@ -2,10 +2,15 @@ server:
   port: 8764
   context-path: /mobile
 eureka:
+  instance:
+    prefer-ip-address: true
+    # 自定义instance-id
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${server.port}}
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://47.93.242.182:8761/eureka/
 spring:
+  # 加了这个配置才会对静态文件进行放行 可以直接通过 static
   freemarker:
     suffix: .ftl
     templateEncoding: UTF-8

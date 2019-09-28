@@ -3,6 +3,7 @@ package com.fan.wang.manage.ipml;
 import com.alibaba.fastjson.JSONObject;
 import com.fan.wang.common.api.BaseApiService;
 import com.fan.wang.common.redis.BaseRedisService;
+import com.fan.wang.constants.Constants;
 import com.fan.wang.dao.UserDao;
 import com.fan.wang.entity.UserEntity;
 import com.fan.wang.manage.UserManage;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -41,9 +43,9 @@ public class UserManageImpl extends BaseApiService implements UserManage {
     private BaseRedisService redisService;
 
     @Override
-    public Map<String,Object> register(UserEntity userEntity) {
-        if (!CollectionUtils.isEmpty(userDao.checkUserRepeat(userEntity))){
-          return setResutError("用户名重复！");
+    public Map<String, Object> register(UserEntity userEntity) {
+        if (!CollectionUtils.isEmpty(userDao.checkUserRepeat(userEntity))) {
+            return setResutError("用户名重复！");
         }
         userEntity.setCreated(DateUtils.getTimestamp());
         userEntity.setUpdated(DateUtils.getTimestamp());
@@ -69,9 +71,17 @@ public class UserManageImpl extends BaseApiService implements UserManage {
         if (userEntity1 == null) {
             return setResutError("账号或密码错误");
         }
+        //登录成功以后，可以进行绑定，此时将openID，写入userEntity，一并更新到数据库
+        String openId = userEntity.getOpenid();
+        if (!StringUtils.isEmpty(openId)){
+            UserEntity temp=new UserEntity();
+            temp.setOpenid(openId);
+            temp.setUpdated(DateUtils.getTimestamp());
+            temp.setId(userEntity1.getId());
+            userDao.updateUserOpenId(temp);
+        }
         //登陆成功，生成token
-        String token = tokenUtils.getToken();
-        redisService.set(token, userEntity1.getId(), 600000L);
+        String token = setUsertoken(Long.valueOf(userEntity1.getId()));
         return setResutSuccessData(token);
     }
 
@@ -101,4 +111,22 @@ public class UserManageImpl extends BaseApiService implements UserManage {
         return rootElement.toJSONString();
     }
 
+    @Override
+    public Map<String, Object> userLoginOpenId(String openid) {
+        UserEntity userEntity = userDao.findUserOpenId(openid);
+        if (userEntity == null) {
+            return setResutError("没有关联用户");
+        }
+        // 生成对应的token
+        String token = setUsertoken(Long.valueOf(userEntity.getId()));
+        return setResutSuccessData(token);
+
+    }
+
+    private String setUsertoken(Long id) {
+        String token = tokenUtils.getToken();
+        // key为自定义令牌,用户的userId作作为value 存放在redis中
+        redisService.set(token, id + "", Constants.USER_TOKEN_TERMVALIDITY);
+        return token;
+    }
 }
