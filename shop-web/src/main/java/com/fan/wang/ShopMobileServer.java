@@ -12,8 +12,8 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @EnableFeignClients
 public class ShopMobileServer {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ShopMobileServer.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ShopMobileServer.class, args);
+    }
 
 }

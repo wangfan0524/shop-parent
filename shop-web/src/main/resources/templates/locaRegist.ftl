@@ -47,15 +47,15 @@
 								<p class="revalidate-user-name" id="revalidate_user_name"></p>
 							</div>
 							<div class="enter-area" id="enter_user">
-								<input type="text" class="enter-item first-enter-item"
+								<input required type="text" class="enter-item first-enter-item"
 									data-rule="(^[\w.\-]+@(?:[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\.)+[A-Za-z]{2,6}$)|(^1\d{10}$)|(^\d{3,}$)|(^\++\d{2,}$)"
 									id="miniLogin_username" name="username" autocomplete="off"
 									placeholder="用户名称"> <i class="placeholder hide"
-									id="message_INPUT_IDENTITY">用户名称</i> <span class="error-tip"><em
+									id="message_INPUT_IDENTITY" >用户名称</i> <span class="error-tip"><em
 									class="error-ico"></em><span class="error-msg"></span></span>
 							</div>
 							<div class="enter-area" id="enter_user">
-								<input type="text" name="email"
+								<input type="text" name="email" required
 									class="enter-item last-enter-item"
 									data-rule="(^[\w.\-]+@(?:[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\.)+[A-Za-z]{2,6}$)|(^1\d{10}$)|(^\d{3,}$)|(^\++\d{2,}$)"
 									id="miniLogin_username" name="phone" autocomplete="off"
@@ -71,7 +71,7 @@
 								<p class="revalidate-user-name" id="revalidate_user_name"></p>
 							</div>
 							<div class="enter-area" id="enter_user">
-								<input type="text" name="phone"
+								<input type="text" name="phone" required
 									class="enter-item first-enter-item"
 									data-rule="(^[\w.\-]+@(?:[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\.)+[A-Za-z]{2,6}$)|(^1\d{10}$)|(^\d{3,}$)|(^\++\d{2,}$)"
 									id="miniLogin_username" name="phone" autocomplete="off"
@@ -80,7 +80,7 @@
 									class="error-ico"></em><span class="error-msg"></span></span>
 							</div>
 							<div class="enter-area" style="z-index: 20;">
-								<input type="password" class="enter-item last-enter-item"
+								<input type="password" class="enter-item last-enter-item" required
 									id="miniLogin_pwd" name="password" autocomplete="off"
 									data-rule="" placeholder="密码"> <i
 									class="placeholder hide" id="message_INPUT_PASSWORD">密码</i> <span

@@ -2,7 +2,6 @@
       <div class="nl-f-nav" id="nl_f_nav">
         <span id="custom_display_4"> <a href="javascript:void(0);" onclick="change_lang(&#39;zh_CN&#39;); return false;" class="zh-cn">简体</a>| <a href="javascript:void(0);" onclick="change_lang(&#39;zh_TW&#39;); return false;" class="zh-tw">繁体</a>| <a href="javascript:void(0);" onclick="change_lang(&#39;en&#39;); return false;" class="zh-en">English</a> </span> <span id="custom_display_32"> <span class="n_common_line">|</span> <span id="message_FAQLIST"><a href="http://static.account.xiaomi.com/html/faq/faqList.html" target="_blank">常见问题</a></span> </span>
       </div>
-      <p class="nl-f-copyright" id="message_COPYRIGHT">上海每特教育科技有限公司(蚂蚁课堂&每特学院)版权所有</p>
     </div>
     <div id="modal-mask" class="modal-mask display-custom-hide"> </div>
     <div class="modal-container display-custom-hide" id="qrlogin-container">

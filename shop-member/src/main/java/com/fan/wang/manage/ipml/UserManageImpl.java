@@ -73,8 +73,8 @@ public class UserManageImpl extends BaseApiService implements UserManage {
         }
         //登录成功以后，可以进行绑定，此时将openID，写入userEntity，一并更新到数据库
         String openId = userEntity.getOpenid();
-        if (!StringUtils.isEmpty(openId)){
-            UserEntity temp=new UserEntity();
+        if (!StringUtils.isEmpty(openId)) {
+            UserEntity temp = new UserEntity();
             temp.setOpenid(openId);
             temp.setUpdated(DateUtils.getTimestamp());
             temp.setId(userEntity1.getId());
@@ -113,10 +113,13 @@ public class UserManageImpl extends BaseApiService implements UserManage {
 
     @Override
     public Map<String, Object> userLoginOpenId(String openid) {
+        log.info("第六步");
         UserEntity userEntity = userDao.findUserOpenId(openid);
+        log.info("第七步");
         if (userEntity == null) {
             return setResutError("没有关联用户");
         }
+        log.info("第八步");
         // 生成对应的token
         String token = setUsertoken(Long.valueOf(userEntity.getId()));
         return setResutSuccessData(token);

@@ -129,7 +129,7 @@
 						</div>
 
 						<span id="custom_display_128"> <a
-							href="locaRegist"
+							href="locaRegister"
 							class="button" id="message_REGISTER">注册帐号</a>
 						</span> <span id="custom_display_8"> <a
 							href="https://account.xiaomi.com/pass/sns/login/auth?appid=222161937813280&callback=http%3A%2F%2Fm.mi.com%2Fmshopapi%2Fv1%2Fauthorize%2Fsso_callback%3Ffollowup%3Dhttp%253A%252F%252Fm.mi.com%252Findex.html%2523ac%253Daccount%2526op%253Dindex%26sign%3DYjJhY2VjZWEwZDYzOTNhNmZhOTRjYmRmMDVlN2ZlZTJhZDFhOTViOA%2C%2C&sid=mi_eshopm"
