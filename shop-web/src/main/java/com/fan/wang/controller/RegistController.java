@@ -5,6 +5,7 @@ import com.fan.wang.base.controller.BaseController;
 import com.fan.wang.constants.BaseApiConstants;
 import com.fan.wang.entity.UserEntity;
 import com.fan.wang.feign.UserFeign;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +22,16 @@ public class RegistController extends BaseController {
 
     @RequestMapping("/locaRegister")
     public String locaRegist(String source, HttpServletRequest request) {
+        request.setAttribute("source", source);
         return LOCAREGIST;
     }
 
     @RequestMapping("/regist")
-    public String regist(UserEntity userEntity, HttpServletRequest request) {
+    public String regist(UserEntity userEntity, HttpServletRequest request,String source) {
         try {
+            if (StringUtils.isNotEmpty(source)){
+                request.setAttribute("source", source);
+            }
             Map<String, Object> registMap = userFeign.regist(userEntity);
             Integer code = (Integer) registMap.get(BaseApiConstants.HTTP_CODE_NAME);
             if (!code.equals(BaseApiConstants.HTTP_200_CODE)) {
