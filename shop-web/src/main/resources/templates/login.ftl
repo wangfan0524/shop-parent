@@ -19,9 +19,10 @@
 		<div class="nl-content">
 			<div class="nl-logo-area" id="custom_display_1">
 				<a href="javascript:void(0)"> <img id="logo-img"
-					src="./static/images/logo4.jpg"
+					src="/images/1.png"
 					width="80">
 				</a>
+                <img src="1.png">
 			</div>
 
 			<h1 class="nl-login-title" id="custom_display_256">
@@ -43,11 +44,17 @@
 				<div class="ng-form-area show-place" id="form-area">
 					<form method="post" action="login" id="miniLogin"
 						onsubmit="return MiniLogin.validateForm();">
-                         <input  type="hidden" name="source" 
+                         <input  type="hidden" name="source"
                           <#if source??>
                           value="${source}"
                           </#if>
                          >
+
+                        <input type="hidden" name="token"
+                                <#if token??>
+                                    value="${token}"
+                                </#if>
+                        >
 						<div class="shake-area" id="shake_area" style="z-index: 30;">
 							<div class="enter-area display-custom-hide" id="revalidate_user">
 								<p class="revalidate-user-name" id="revalidate_user_name"></p>
@@ -126,7 +133,7 @@
 								<div class="third-area hide" id="third_area"></div>
 							</div>
 
-						</div>
+	> <		</div>
 
 						<span id="custom_display_128"> <a
 							href="locaRegister"

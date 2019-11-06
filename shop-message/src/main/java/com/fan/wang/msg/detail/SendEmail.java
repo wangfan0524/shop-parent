@@ -28,10 +28,10 @@ public class SendEmail implements ApplicationListener<UserRegisterEvent> {
     @Override
     public void onApplicationEvent(UserRegisterEvent userRegisterEvent) {
         //解析消息进行发送
-        System.out.println(userRegisterEvent.getMessage());
         JSONObject jsonObject= (JSONObject) userRegisterEvent.getMessage().get("content");
         String mail=jsonObject.getString("email");
         String userName=jsonObject.getString("username");
+        int i=0;
         log.info("###消费者收到消息... mail:{},userName:{}",mail,userName);
         // 发送邮件
         // 开始发送邮件
@@ -41,6 +41,11 @@ public class SendEmail implements ApplicationListener<UserRegisterEvent> {
         message.setSubject("商城注册成功");
         message.setText(userName+ "欢迎您,成为新用户!");
         log.info("###发送短信邮箱 mail:{}", mail);
-        mailSender.send(message);
+        try {
+            mailSender.send(message);
+        }catch (Exception e){
+
+        }
+
     }
 }

@@ -8,6 +8,7 @@ import com.fan.wang.constants.BaseApiConstants;
 import com.fan.wang.constants.Constants;
 import com.fan.wang.entity.UserEntity;
 import com.fan.wang.feign.UserFeign;
+import com.fan.wang.utils.token.TokenUtils;
 import com.fan.wang.utils.web.CookieUtil;
 import com.qq.connect.QQConnectException;
 import com.qq.connect.api.OpenID;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -57,22 +59,67 @@ public class LoginConroller extends BaseController {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private TokenUtils tokenUtils;
+
+    private int i=0;
+
     @RequestMapping("/locaLogin")
     public String locaLogin(String source, HttpServletRequest request) {
         request.setAttribute("source", source);
+
+        HttpSession session=request.getSession();
+        session.setAttribute("token", tokenUtils.getToken());
+        //request.setAttribute("token",session.getAttribute("token"));
         return LGOIN;
     }
 
-    @RequestMapping(value = "/test",method = RequestMethod.POST)
-    public Map<String, Object> test( HttpServletRequest request) {
+    @RequestMapping(value = "/test")
+    public void test( HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+        //request不能使用全局变量  ，因为线程不安全
+        System.out.println("这是第：" + i + "次请求");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=utf-8");
+        System.out.println(request.getContextPath());
+        //测试线程安全问题
+        synchronized (this) {
+            response.getWriter().write("这是第：" + i + "次请求");
+
+            try {
+                Thread.sleep(5000);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            i++;
+        }
+    }
+    @RequestMapping(value = "/getSession")
+    public void getSession( HttpServletRequest request) {
+        HttpSession session=request.getSession();
+        if (session!=null){
+           String name= (String) session.getAttribute("userName");
+            System.out.println(name+"-----name");
+            System.out.println(session.getId()+"-----sessionid");
+        }else{
+            System.out.println("无结果");
+        }
+    }
+    @RequestMapping(value = "/index")
+    public String index( HttpServletRequest request) {
         String msg="中国人";
 
+        if (request.getSession().getAttribute("token")==null){
+            System.out.println("请登录");
+            return "redirect:/locaLogin" ;
+        }
 
         Map<String, Object> result = new HashMap<String, Object>();
         result.put(BaseApiConstants.HTTP_CODE_NAME, "code");
         result.put(BaseApiConstants.HTTP_200_NAME, "msg");
         result.put(BaseApiConstants.HTTP_DATA_NAME, msg);
-        return result;
+        return INDEX;
     }
 
     @RequestMapping("/login")
@@ -80,7 +127,16 @@ public class LoginConroller extends BaseController {
     // was an unexpected error (type=Unsupported
     // Media Type, status=415). Content type
     // 'application/x-www-form-urlencoded;charset=UTF-8' not supported
-    public String login(UserEntity userEntity, String source, HttpSession httpSession,HttpServletRequest request, HttpServletResponse response) {
+    public String login(UserEntity userEntity, String source, HttpSession httpSession,HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+
+        // 放置重复提交表单
+        boolean flag = isFlag(request);
+        if (!flag) {
+            response.getWriter().write("已经提交...");
+            System.out.println("数据已经提交了..");
+            return setError(request, "已经提交...", LGOIN);
+        }
         if (!StringUtils.isEmpty(source) && source.equals(Constants.USER_SOURCE_QQ)) {
             String openid = (String) httpSession.getAttribute(Constants.USER_SESSION_OPENID);
             userEntity.setOpenid(openid);
@@ -156,37 +212,15 @@ public class LoginConroller extends BaseController {
         return "redirect:" + authorizeUrl;
     }
 
-    public static Map<String, List<String>> getQueryParams(String url) {
-        try {
-            Map<String, List<String>> params = new HashMap<String, List<String>>();
-            String[] urlParts = url.split("\\?");
-            if (urlParts.length > 1) {
-                String query = urlParts[1];
-                for (String param : query.split("&")) {
-                    String[] pair = param.split("=");
-                    String key = null;
-                    try {
-                        key = URLDecoder.decode(pair[0], "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-                    String value = "";
-                    if (pair.length > 1) {
-                        value = URLDecoder.decode(pair[1], "UTF-8");
-                    }
+    public boolean isFlag(HttpServletRequest request){
 
-                    List<String> values = params.get(key);
-                    if (values == null) {
-                        values = new ArrayList<String>();
-                        params.put(key, values);
-                    }
-                    values.add(value);
-                }
-            }
-
-            return params;
-        } catch (UnsupportedEncodingException ex) {
-            throw new AssertionError(ex);
+        HttpSession session=request.getSession();
+        String token= (String) session.getAttribute("token");
+        String temp=request.getParameter("token");
+        if (!token.equals(temp)){
+            return false;
         }
+        session.removeAttribute("token");
+        return true;
     }
 }

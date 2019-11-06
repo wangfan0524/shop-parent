@@ -1,4 +1,4 @@
-package com.fan.wang.api.service.impl;
+package com.fan.wang.service.pay;
 
 import com.fan.wang.api.service.UserService;
 import com.fan.wang.common.api.BaseApiService;
@@ -6,6 +6,7 @@ import com.fan.wang.entity.UserEntity;
 import com.fan.wang.manage.UserManage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ import java.util.Map;
 @Slf4j
 public class UserServiceImpl extends BaseApiService implements UserService {
     @Autowired
+    @Qualifier(value = "userManageImpl")
     private UserManage userManage;
 
     @Override

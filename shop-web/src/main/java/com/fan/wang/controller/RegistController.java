@@ -23,6 +23,8 @@ public class RegistController extends BaseController {
     @RequestMapping("/locaRegister")
     public String locaRegist(String source, HttpServletRequest request) {
         request.setAttribute("source", source);
+
+        String str="{\"name\":\"wangfan\"}";
         return LOCAREGIST;
     }
 

@@ -1,0 +1,55 @@
+server:
+  port: 8767
+eureka:
+  instance:
+    prefer-ip-address: true
+    # 自定义instance-id
+    instance-id: ${spring.application.name}:${spring.application.instance-id:${server.port}}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: shop-pay
+  rabbitmq:
+    host: 47.93.242.182
+    port: 5672
+    username: test
+    password: 123456
+    virtual-host: /
+  redis:
+    port: 6379
+    # password: root
+    requirePass: root
+    pool:
+      max-idle: 100
+      min-idle: 1
+      max-active: 1000
+      max-wait: -1
+    database: 5
+    host: 47.93.242.182
+
+
+  #数据库连接信息
+  datasource:
+    name: test
+    url: jdbc:mysql://47.93.242.182:3308/ship-pay
+    username: root
+    password: root
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20

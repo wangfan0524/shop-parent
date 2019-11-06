@@ -47,6 +47,12 @@
 									value="${source}"
 								</#if>
 						>
+						<input  type="hidden" name="token"
+								<#if sesionToken??>
+									value="${sesionToken}"
+								</#if>
+
+						>
 						<div class="shake-area" id="shake_area" style="z-index: 30;">
 							<div class="enter-area display-custom-hide" id="revalidate_user">
 								<p class="revalidate-user-name" id="revalidate_user_name"></p>
